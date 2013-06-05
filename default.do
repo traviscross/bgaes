@@ -1,6 +1,10 @@
 # -*- mode:sh -*-
 exec >&2; set -x
 set -- $1 ${1%.*} ${@:3}
+case $(getconf LONG_BIT) in
+  32) CPPFLAGS="$CPPFLAGS -D_M_IX86 -DASM_X86_V2" ;;
+  64) CPPFLAGS="$CPPFLAGS -D_M_X64 -DASM_AMD64_C" ;;
+esac
 case $1 in
   all)
     redo-ifchange lib
@@ -15,10 +19,9 @@ case $1 in
   lib)
     DEPS=""
     case $(getconf LONG_BIT) in
-      32) DEPS="$DEPS aes_x86_v2.o"; CPPFLAGS="$CPPFLAGS -D_M_IX86 -DASM_X86_V2" ;;
-      64) DEPS="$DEPS aes_amd64.o"; CPPFLAGS="$CPPFLAGS -D_M_X64 -DASM_AMD64_C" ;;
+      32) DEPS="$DEPS aes_x86_v2.o" ;;
+      64) DEPS="$DEPS aes_amd64.o" ;;
     esac
-    export CPPFLAGS
     DEPS="$DEPS aescrypt.o aeskey.o aestab.o aes_modes.o"
     redo-ifchange $DEPS
     gcc $DEPS -shared -o bgaes2.so
