@@ -2,6 +2,7 @@
 exec >&2; set -x
 set -- $1 ${1%.*} ${@:3}
 
+[ -n "$CC" ] || export CC=gcc
 case $(getconf LONG_BIT) in
   32) CPPFLAGS="$CPPFLAGS -D_M_IX86 -DASM_X86_V2" ;;
   64) CPPFLAGS="$CPPFLAGS -D_M_X64 -DASM_AMD64_C" ;;
@@ -28,7 +29,7 @@ case $1 in
     ;;
   bgaes2.so)
     redo-ifchange $(get_deps)
-    gcc $LDFLAGS $(get_deps) -shared -o $3
+    $CC $LDFLAGS $(get_deps) -shared -o $3
     ;;
   bgaes2.a)
     redo-ifchange $(get_deps)
@@ -43,7 +44,7 @@ case $1 in
       esac
     else
       redo-ifchange $2.c
-      gcc -MD -MF $2.d -fPIC $CPPFLAGS $CFLAGS -c -o $3 $2.c
+      $CC -MD -MF $2.d -fPIC $CPPFLAGS $CFLAGS -c -o $3 $2.c
       read DEPS < $2.d
       redo-ifchange ${DEPS#*:}
     fi
