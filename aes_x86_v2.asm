@@ -205,7 +205,7 @@
 %endmacro
 
 %ifndef ASM_X86_V2C
-    do_name _aes_init,0
+    do_name aes_init,0
     do_exit 0
 %endif
 
@@ -459,7 +459,7 @@ enc_round:
 ;   AES Encryption Subroutine
 
     align   32
-    do_name _aes_encrypt,12
+    do_name aes_encrypt,12
     push    ebp
     push    ebx
     push    esi
@@ -592,7 +592,7 @@ enc_round:
 %assign rc_val  1
 
     align   32
-    do_name _aes_encrypt_key128,8
+    do_name aes_encrypt_key128,8
     push    ebp
     push    ebx
     push    esi
@@ -642,7 +642,7 @@ enc_round:
 %assign rc_val  1
 
     align   32
-    do_name _aes_encrypt_key192,8
+    do_name aes_encrypt_key192,8
     push    ebp
     push    ebx
     push    esi
@@ -693,7 +693,7 @@ enc_round:
 %assign rc_val  1
 
     align   32
-    do_name _aes_encrypt_key256,8
+    do_name aes_encrypt_key256,8
     push    ebp
     push    ebx
     push    esi
@@ -745,7 +745,7 @@ enc_round:
 %endif
 
     align   32
-    do_name _aes_encrypt_key,12
+    do_name aes_encrypt_key,12
 
     mov     ecx,[esp+4]
     mov     eax,[esp+8]
@@ -771,11 +771,11 @@ enc_round:
     add     esp,8
     do_exit 12
 
-.1: do_call _aes_encrypt_key128,8
+.1: do_call aes_encrypt_key128,8
     do_exit 12
-.2: do_call _aes_encrypt_key192,8
+.2: do_call aes_encrypt_key192,8
     do_exit 12
-.3: do_call _aes_encrypt_key256,8
+.3: do_call aes_encrypt_key256,8
     do_exit 12
 
 %endif
@@ -963,7 +963,7 @@ dec_round:
 ; AES Decryption Subroutine
 
     align   32
-    do_name _aes_decrypt,12
+    do_name aes_decrypt,12
     push    ebp
     push    ebx
     push    esi
@@ -1087,7 +1087,7 @@ inv_mix_col:
 %endif
 
     align   32
-    do_name _aes_decrypt_key128,8
+    do_name aes_decrypt_key128,8
     push    ebp
     push    ebx
     push    esi
@@ -1097,7 +1097,7 @@ inv_mix_col:
     mov     edx,[esp+20]    ; key
     push    eax
     push    edx
-    do_call _aes_encrypt_key128,8   ; generate expanded encryption key
+    do_call aes_encrypt_key128,8   ; generate expanded encryption key
     mov     eax,10*16
     mov     esi,[esp+24]    ; pointer to first round key
     lea     edi,[esi+eax]   ; pointer to last round key
@@ -1139,7 +1139,7 @@ inv_mix_col:
 %endif
 
     align   32
-    do_name _aes_decrypt_key192,8
+    do_name aes_decrypt_key192,8
     push    ebp
     push    ebx
     push    esi
@@ -1149,7 +1149,7 @@ inv_mix_col:
     mov     edx,[esp+20]    ; key
     push    eax
     push    edx
-    do_call _aes_encrypt_key192,8   ; generate expanded encryption key
+    do_call aes_encrypt_key192,8   ; generate expanded encryption key
     mov     eax,12*16
     mov     esi,[esp+24]    ; first round key
     lea     edi,[esi+eax]   ; last round key
@@ -1208,7 +1208,7 @@ inv_mix_col:
 %endif
 
     align   32
-    do_name _aes_decrypt_key256,8
+    do_name aes_decrypt_key256,8
     push    ebp
     push    ebx
     push    esi
@@ -1218,7 +1218,7 @@ inv_mix_col:
     mov     edx,[esp+20]
     push    eax
     push    edx
-    do_call _aes_encrypt_key256,8   ; generate expanded encryption key
+    do_call aes_encrypt_key256,8   ; generate expanded encryption key
     mov     eax,14*16
     mov     esi,[esp+24]
     lea     edi,[esi+eax]
@@ -1326,7 +1326,7 @@ dec_end:
 %ifdef AES_VAR
 
     align   32
-    do_name _aes_decrypt_key,12
+    do_name aes_decrypt_key,12
 
     mov     ecx,[esp+4]
     mov     eax,[esp+8]
@@ -1352,11 +1352,11 @@ dec_end:
     add     esp,8
     do_exit 12
 
-.1: do_call _aes_decrypt_key128,8
+.1: do_call aes_decrypt_key128,8
     do_exit 12
-.2: do_call _aes_decrypt_key192,8
+.2: do_call aes_decrypt_key192,8
     do_exit 12
-.3: do_call _aes_decrypt_key256,8
+.3: do_call aes_decrypt_key256,8
     do_exit 12
 
 %endif

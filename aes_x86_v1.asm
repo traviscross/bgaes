@@ -351,7 +351,7 @@ stk_spc equ    20   ; stack space
 ; AES Encryption Subroutine
 
     align   32
-    do_name _aes_encrypt
+    do_name aes_encrypt
 
     sub     esp,stk_spc
     mov     [esp+16],ebp
@@ -562,7 +562,7 @@ stk_spc equ    20   ; stack space
 ; AES Decryption Subroutine
 
     align   32
-    do_name _aes_decrypt
+    do_name aes_decrypt
 
     sub     esp,stk_spc
     mov     [esp+16],ebp
