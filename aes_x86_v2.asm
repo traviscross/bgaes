@@ -204,11 +204,6 @@
 %endif
 %endmacro
 
-%ifndef ASM_X86_V2C
-    do_name aes_init,0
-    do_exit 0
-%endif
-
 ; finite field multiplies by {02}, {04} and {08}
 
 %define f2(x)   ((x<<1)^(((x>>7)&1)*0x11b))
