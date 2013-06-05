@@ -24,7 +24,7 @@ case $1 in
     esac
     DEPS="$DEPS aescrypt.o aeskey.o aestab.o aes_modes.o"
     redo-ifchange $DEPS
-    gcc $DEPS -shared -o bgaes2.so
+    gcc $LDFLAGS $DEPS -shared -o bgaes2.so
     ar cr bgaes2.a $DEPS
     ;;
   *.o)
@@ -36,7 +36,7 @@ case $1 in
       esac
     else
       redo-ifchange $2.c
-      gcc -MD -MF $2.d -fPIC $CPPFLAGS -c -o $3 $2.c
+      gcc -MD -MF $2.d -fPIC $CPPFLAGS $CFLAGS -c -o $3 $2.c
       read DEPS < $2.d
       redo-ifchange ${DEPS#*:}
     fi
