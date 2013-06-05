@@ -13,7 +13,7 @@ case $1 in
     rm -f *.o *.d *.a *.so
     ;;
   distclean)
-    redo-always clean
+    redo clean
     rm -rf .redo
     ;;
   lib)
