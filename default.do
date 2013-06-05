@@ -1,13 +1,23 @@
 # -*- mode:sh -*-
 exec >&2; set -x
 set -- $1 ${1%.*} ${@:3}
+
 case $(getconf LONG_BIT) in
   32) CPPFLAGS="$CPPFLAGS -D_M_IX86 -DASM_X86_V2" ;;
   64) CPPFLAGS="$CPPFLAGS -D_M_X64 -DASM_AMD64_C" ;;
 esac
+get_deps() {
+  DEPS=""
+  case $(getconf LONG_BIT) in
+    32) DEPS="$DEPS aes_x86_v2.o" ;;
+    64) DEPS="$DEPS aes_amd64.o" ;;
+  esac
+  echo "$DEPS aescrypt.o aeskey.o aestab.o aes_modes.o"
+}
+
 case $1 in
   all)
-    redo-ifchange lib
+    redo-ifchange bgaes2.so bgaes2.a
     ;;
   clean)
     rm -f *.o *.d *.a *.so
@@ -16,16 +26,13 @@ case $1 in
     redo clean
     rm -rf .redo
     ;;
-  lib)
-    DEPS=""
-    case $(getconf LONG_BIT) in
-      32) DEPS="$DEPS aes_x86_v2.o" ;;
-      64) DEPS="$DEPS aes_amd64.o" ;;
-    esac
-    DEPS="$DEPS aescrypt.o aeskey.o aestab.o aes_modes.o"
-    redo-ifchange $DEPS
-    gcc $LDFLAGS $DEPS -shared -o bgaes2.so
-    ar cr bgaes2.a $DEPS
+  bgaes2.so)
+    redo-ifchange $(get_deps)
+    gcc $LDFLAGS $(get_deps) -shared -o $3
+    ;;
+  bgaes2.a)
+    redo-ifchange $(get_deps)
+    ar cr $3 $(get_deps)
     ;;
   *.o)
     if test -f $2.asm; then
