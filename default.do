@@ -25,7 +25,7 @@ case $1 in
     ;;
   distclean)
     redo clean
-    rm -rf .redo
+    rm -rf .redo .do_built* *.did
     ;;
   bgaes2.so)
     redo-ifchange $(get_deps)
