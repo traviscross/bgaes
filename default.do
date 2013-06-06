@@ -5,13 +5,13 @@ set -- $1 ${1%.*} $3
 [ -n "$CC" ] || export CC=gcc
 case $(getconf LONG_BIT) in
   32) CPPFLAGS="$CPPFLAGS -D_M_IX86 -DASM_X86_V2" ;;
-  64) CPPFLAGS="$CPPFLAGS -D_M_X64 -DASM_AMD64_C" ;;
+  64) CPPFLAGS="$CPPFLAGS -D_M_X64 -DC" ;;
 esac
 get_deps() {
   DEPS=""
   case $(getconf LONG_BIT) in
     32) DEPS="$DEPS aes_x86_v2.o" ;;
-    64) DEPS="$DEPS aes_amd64.o" ;;
+    64) DEPS="$DEPS" ;;
   esac
   echo "$DEPS aescrypt.o aeskey.o aestab.o aes_modes.o"
 }
