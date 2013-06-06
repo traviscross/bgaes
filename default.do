@@ -1,6 +1,6 @@
 # -*- mode:sh -*-
 exec >&2; set -x
-set -- $1 ${1%.*} ${@:3}
+set -- $1 ${1%.*} $3
 
 [ -n "$CC" ] || export CC=gcc
 case $(getconf LONG_BIT) in
