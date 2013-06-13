@@ -1,0 +1,9 @@
+# gitignore
+.redo/
+*.did
+.do_built
+.do_built.dir/
+*.d
+*.o
+*.so
+*.a
