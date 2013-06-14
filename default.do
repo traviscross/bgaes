@@ -18,7 +18,13 @@ get_deps() {
 
 case $1 in
   all)
-    redo-ifchange bgaes2.so bgaes2.a bgaes_bo.so bgaes_bo.a
+    redo-ifchange bgaes2.so bgaes2.a bgaes_bo.so bgaes_bo.a \
+      bgaes_ccm.so bgaes_ccm.a \
+      bgaes_cmac.so bgaes_cmac.a \
+      bgaes_cwc.so bgaes_cwc.a \
+      bgaes_eax.so bgaes_eax.a \
+      bgaes_gcm.so bgaes_gcm.a \
+      bgaes_omac.so bgaes_omac.a
     ;;
   clean)
     rm -f *.o *.d *.a *.so
@@ -42,6 +48,66 @@ case $1 in
     ;;
   bgaes_bo.a)
     O=byte_aes.o
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
+  bgaes_ccm.so)
+    O="ccm.o"
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_ccm.a)
+    O="ccm.o"
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
+  bgaes_cmac.so)
+    O="cmac.o"
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_cmac.a)
+    O="cmac.o"
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
+  bgaes_cwc.so)
+    O="cwc.o"
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_cwc.a)
+    O="cwc.o"
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
+  bgaes_eax.so)
+    O="eax.o"
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_eax.a)
+    O="eax.o"
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
+  bgaes_gcm.so)
+    O="gcm.o gf128mul.o gf_convert.o"
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_gcm.a)
+    O="gcm.o gf128mul.o gf_convert.o"
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
+  bgaes_omac.so)
+    O="omac.o"
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_omac.a)
+    O="omac.o"
     redo-ifchange $O
     ar cr $3 $O
     ;;
