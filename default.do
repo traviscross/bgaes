@@ -26,6 +26,7 @@ case $1 in
       bgaes_gcm.so bgaes_gcm.a \
       bgaes_omac.so bgaes_omac.a \
       bgaes_xts.so bgaes_xts.a \
+      bgaes_eme2.so bgaes_eme2.a \
     ;;
   clean)
     rm -f *.o *.d *.a *.so
@@ -119,6 +120,16 @@ case $1 in
     ;;
   bgaes_xts.a)
     O="xts.o"
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
+  bgaes_eme2.so)
+    O="eme2.o"
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_eme2.a)
+    O="eme2.o"
     redo-ifchange $O
     ar cr $3 $O
     ;;
