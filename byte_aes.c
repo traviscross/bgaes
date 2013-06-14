@@ -331,8 +331,9 @@ static void copy_block( void *d, const void *s )
 
 static void copy_block_nn( void * d, const void *s, uint_8t nn )
 {
+    uint_8t *di = (uint_8t*)d, *si = (uint_8t*)s;
     while( nn-- )
-        *((uint_8t*)d)++ = *((uint_8t*)s)++;
+        *di++ = *si++;
 }
 
 static void xor_block( void *d, const void *s )
