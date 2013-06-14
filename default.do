@@ -18,7 +18,7 @@ get_deps() {
 
 case $1 in
   all)
-    redo-ifchange bgaes2.so bgaes2.a
+    redo-ifchange bgaes2.so bgaes2.a bgaes_bo.so bgaes_bo.a
     ;;
   clean)
     rm -f *.o *.d *.a *.so
