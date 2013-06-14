@@ -35,6 +35,16 @@ case $1 in
     redo-ifchange $(get_deps)
     ar cr $3 $(get_deps)
     ;;
+  bgaes_bo.so)
+    O=byte_aes.o
+    redo-ifchange $O
+    $CC $LDFLAGS $O -shared -o $3
+    ;;
+  bgaes_bo.a)
+    O=byte_aes.o
+    redo-ifchange $O
+    ar cr $3 $O
+    ;;
   *.o)
     if test -f $2.asm; then
       redo-ifchange $2.asm
